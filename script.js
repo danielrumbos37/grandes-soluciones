@@ -8,7 +8,7 @@ document.addEventListener('DOMContentLoaded', () => {
             navLinks.classList.toggle('active');
         });
 
-        // Cerrar el menú al hacer clic en cualquier enlace
+        
         document.querySelectorAll('.nav-links a').forEach(link => {
             link.addEventListener('click', () => {
                 navLinks.classList.remove('active');
@@ -24,14 +24,14 @@ document.addEventListener('DOMContentLoaded', () => {
         
         if (question) {
             question.addEventListener('click', () => {
-                // Cierra las demás preguntas para que solo una esté abierta a la vez
+                
                 faqItems.forEach(other => {
                     if (other !== item) {
                         other.classList.remove('active');
                     }
                 });
 
-                // Alterna la clase active en la pregunta seleccionada
+                
                 item.classList.toggle('active');
             });
         }

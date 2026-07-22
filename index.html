@@ -103,6 +103,14 @@
             background-color: var(--color-hover);
         }
 
+        /* Botón hamburguesa (oculto en PC) */
+        .hamburger {
+            display: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--texto-oscuro);
+        }
+
         /* --- SECCIÓN HERO (PORTADA) --- */
         .hero {
             background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.6)), 
@@ -114,6 +122,7 @@
             text-align: center;
             color: white;
             margin-bottom: 40px; 
+            padding: 0 20px;
         }
 
         .hero-content {
@@ -195,35 +204,44 @@
             margin: 0 auto;
         }
 
-        .card-vehiculo {
-            background: white;
+        /* --- TARJETA MINIMALISTA CON ZOOM --- */
+        .car-card {
+            background: #ffffff;
             border-radius: 12px;
-            padding: 25px;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.04);
+            padding: 1.5rem;
+            text-align: left;
             transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border: 1px solid #e8e8e8;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
             display: flex;
             flex-direction: column;
-            text-align: left;
+            overflow: hidden; /* Mantiene el zoom dentro de los bordes redondeados */
         }
 
-        .card-vehiculo:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+        .car-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+            border-color: #d4af37;
         }
 
-        .card-vehiculo img {
+        .car-card img {
             width: 100%;
             height: 180px;
             object-fit: contain;
             margin-bottom: 20px;
+            transition: transform 0.4s ease; /* Suaviza el zoom */
         }
 
-        .card-vehiculo h3 {
+        .car-card:hover img {
+            transform: scale(1.08); /* Acercamiento suave al pasar el cursor */
+        }
+
+        .car-card h3 {
             font-size: 1.4rem;
             margin: 0 0 10px 0;
         }
 
-        .card-vehiculo p {
+        .car-card p {
             color: var(--texto-gris);
             font-size: 0.9rem;
             line-height: 1.5;
@@ -270,17 +288,17 @@
             text-decoration: none;
             font-weight: 700;
             font-size: 1rem;
-            transition: transform 0.3s;
             display: flex;
             align-items: center;
             gap: 5px;
+            transition: transform 0.3s;
         }
 
-        .card-vehiculo:hover .link-quiero {
+        .car-card:hover .link-quiero {
             transform: translateX(5px);
         }
 
-        /* --- NUEVAS SECCIONES: VENTAJAS, TESTIMONIOS, FAQ --- */
+        /* --- SECCIONES EXTRA (VENTAJAS, TESTIMONIOS, FAQ) --- */
         .seccion-extra {
             padding: 60px 5%;
             background-color: #ffffff;
@@ -305,7 +323,6 @@
             margin-bottom: 40px;
         }
 
-        /* Grid de Ventajas */
         .ventajas-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
@@ -327,7 +344,6 @@
             margin-bottom: 15px;
         }
 
-        /* Grid de Testimonios */
         .testimonios-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -348,7 +364,6 @@
             margin-bottom: 10px;
         }
 
-        /* Estilos FAQ Acordeón */
         .faq-list {
             max-width: 800px;
             margin: 0 auto;
@@ -405,24 +420,49 @@
             margin-top: 60px;
         }
 
-        footer a {
-            color: var(--color-principal);
-            text-decoration: none;
-        }
-
+        /* --- ADAPTABILIDAD PARA TELÉFONOS (MEDIA QUERIES) --- */
         @media (max-width: 768px) {
+            .navbar {
+                padding: 15px 4%;
+            }
+
             .nav-links {
                 display: none;
+                flex-direction: column;
+                width: 100%;
+                background-color: white;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                padding: 25px 0;
+                box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+                text-align: center;
+                gap: 20px;
+                border-bottom: 1px solid #eee;
             }
+
+            .nav-links.active {
+                display: flex;
+            }
+
+            .hamburger {
+                display: block;
+            }
+
             .hero h1 {
-                font-size: 2.5rem;
+                font-size: 2.3rem;
             }
+
             .hero p {
                 font-size: 1.1rem;
             }
-            .btn-principal {
-                padding: 15px 30px;
-                font-size: 1rem;
+
+            .catalogo-header h2 {
+                font-size: 2.2rem;
+            }
+
+            .seccion-extra h2 {
+                font-size: 2rem;
             }
         }
     </style>
@@ -444,13 +484,17 @@
             </a>
             <a href="#reservar" class="btn-reservar">Reservar</a>
         </nav>
+        <!-- Icono de Menú Hamburguesa para Móviles -->
+        <div class="hamburger">
+            <i class="fas fa-bars"></i>
+        </div>
     </header>
 
     <!-- 2. SECCIÓN HERO (PORTADA) -->
     <section class="hero">
         <div class="container hero-content">
             <h1>LIBERTAD SOBRE RUEDAS <br><span>EN VENEZUELA</span></h1>
-            <p>Renta por km. Sin tarjeta de crédito. Precios en USD fijos.</p>
+            <p>Alquila sin tarjeta de crédito, con 200 KM incluidos por día y tarifas transparentes en dólares.</p>
             <a href="#catalogo" class="btn-principal">VER CATÁLOGO</a>
         </div>
     </section>
@@ -465,7 +509,7 @@
         <div class="grid-vehiculos">
             
             <!-- TARJETA 1 -->
-            <div class="card-vehiculo">
+            <div class="car-card">
                 <img src="img/changan-alsvin.png" alt="Changan New Alsvin">
                 <h3>Changan New Alsvin</h3>
                 <div class="tags">
@@ -480,7 +524,7 @@
             </div>
 
             <!-- TARJETA 2 -->
-            <div class="card-vehiculo">
+            <div class="car-card">
                 <img src="img/jac-arenapro.png" alt="Jac Arena Pro">
                 <h3>Jac Arena Pro</h3>
                 <div class="tags">
@@ -495,7 +539,7 @@
             </div>
 
             <!-- TARJETA 3 -->
-            <div class="card-vehiculo">
+            <div class="car-card">
                 <img src="img/nissan-sylphy.png" alt="Nissan Sylphy">
                 <h3>Nissan Sylphy</h3>
                 <div class="tags">
@@ -510,7 +554,7 @@
             </div>
             
             <!-- TARJETA 4 -->
-            <div class="card-vehiculo">
+            <div class="car-card">
                 <img src="img/mitsubishi-asx.png" alt="Mitsubishi ASX">
                 <h3>Mitsubishi ASX</h3>
                 <div class="tags">
@@ -525,7 +569,7 @@
             </div>
 
             <!-- TARJETA 5 -->
-            <div class="card-vehiculo">
+            <div class="car-card">
                 <img src="img/toyota-fortuner.png" alt="Toyota Fortuner">
                 <h3>Toyota Fortuner</h3>
                 <div class="tags">
@@ -628,9 +672,27 @@
         <p>&copy; 2026 Grandes Soluciones. Todos los derechos reservados.</p>
     </footer>
 
-    <!-- SCRIPT JS PARA EL ACORDEÓN DE PREGUNTAS -->
+    <!-- SCRIPTS JS -->
     <script>
         document.addEventListener('DOMContentLoaded', () => {
+            // 1. Lógica del menú hamburguesa para teléfonos
+            const hamburger = document.querySelector('.hamburger');
+            const navLinks = document.querySelector('.nav-links');
+
+            if (hamburger && navLinks) {
+                hamburger.addEventListener('click', () => {
+                    navLinks.classList.toggle('active');
+                });
+
+                // Cierra automáticamente el menú al hacer clic en una opción
+                document.querySelectorAll('.nav-links a').forEach(link => {
+                    link.addEventListener('click', () => {
+                        navLinks.classList.remove('active');
+                    });
+                });
+            }
+
+            // 2. Lógica del acordeón para Preguntas Frecuentes (FAQ)
             const faqItems = document.querySelectorAll('.faq-item');
 
             faqItems.forEach(item => {
