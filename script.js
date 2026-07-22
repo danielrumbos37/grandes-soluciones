@@ -1,45 +1,38 @@
-// ===== MENÚ HAMBURGUESA =====
-const hamburger = document.querySelector('.hamburger');
-const navLinks = document.querySelector('.nav-links');
+document.addEventListener('DOMContentLoaded', () => {
+    // ===== 1. MENÚ HAMBURGUESA MÓVIL =====
+    const hamburger = document.querySelector('.hamburger');
+    const navLinks = document.querySelector('.nav-links');
 
-hamburger.addEventListener('click', () => {
-    navLinks.classList.toggle('active');
-    hamburger.classList.toggle('active');
-});
-
-document.querySelectorAll('.nav-links a').forEach(link => {
-    link.addEventListener('click', () => {
-        navLinks.classList.remove('active');
-        hamburger.classList.remove('active');
-    });
-});
-
-// ===== PREGUNTAS FRECUENTES (ACORDEÓN) =====
-const faqItems = document.querySelectorAll('.faq-item');
-
-faqItems.forEach(item => {
-    const question = item.querySelector('.faq-question');
-    question.addEventListener('click', () => {
-        faqItems.forEach(otherItem => {
-            if (otherItem !== item) {
-                otherItem.classList.remove('active');
-            }
+    if (hamburger && navLinks) {
+        hamburger.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
         });
-        item.classList.toggle('active');
-    });
-});
 
-// ===== NAVEGACIÓN SUAVE =====
-document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-    anchor.addEventListener('click', function(e) {
-        const href = this.getAttribute('href');
-        if (href === "#") return;
-        e.preventDefault();
-        const target = document.querySelector(href);
-        if (target) {
-            target.scrollIntoView({
-                behavior: 'smooth',
-                block: 'start'
+        // Cerrar el menú al hacer clic en cualquier enlace
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', () => {
+                navLinks.classList.remove('active');
+            });
+        });
+    }
+
+    // ===== 2. ACORDEÓN DE PREGUNTAS FRECUENTES (FAQ) =====
+    const faqItems = document.querySelectorAll('.faq-item');
+
+    faqItems.forEach(item => {
+        const question = item.querySelector('.faq-question');
+        
+        if (question) {
+            question.addEventListener('click', () => {
+                // Cierra las demás preguntas para que solo una esté abierta a la vez
+                faqItems.forEach(other => {
+                    if (other !== item) {
+                        other.classList.remove('active');
+                    }
+                });
+
+                // Alterna la clase active en la pregunta seleccionada
+                item.classList.toggle('active');
             });
         }
     });
